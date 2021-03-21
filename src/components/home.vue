@@ -5,36 +5,41 @@
                 <b-col md="6">
 
                     <div class="text-light text-center mb-4" style="background-color: #043f66; padding: 1px; border-radius: 5px; font-size: 25px;font-weight: bold">
-                        Módulos <font-awesome-icon icon="microchip"/>
+                        Entradas <font-awesome-icon icon="microchip"/>
                     </div>
 
                     <b-row>
                         <b-col cols="6" md="3">
                             <b-form-group style="color: red; font-weight: bold" label="LED 1:" label-for="led_1">
-                                <b-form-checkbox id="led_1" size="lg" name="check-button" switch/>
+                                <b-form-checkbox id="led_1" size="lg" switch/>
                             </b-form-group>
                         </b-col>
                         <b-col style="color: green; font-weight: bold" cols="6" md="3">
                             <b-form-group label="LED 2:" label-for="led_2">
-                                <b-form-checkbox id="led_2" size="lg" name="check-button" switch/>
+                                <b-form-checkbox id="led_2" size="lg" switch/>
                             </b-form-group>
                         </b-col>
                         <b-col style="color: blue; font-weight: bold" cols="6" md="3">
                             <b-form-group label="LED 3:" label-for="led_3">
-                                <b-form-checkbox id="led_3" size="lg" name="check-button" switch/>
+                                <b-form-checkbox id="led_3" size="lg" switch/>
                             </b-form-group>
                         </b-col>
                         <b-col cols="6" md="3" style="font-weight: bold">
-                            <b-form-group label="RGB:" label-for="led_rgb">
+                            <b-form-group :style="'color:' + led_rgb" label="RGB:" label-for="led_rgb">
                                 <b-form-input id="led_rgb" v-model="led_rgb" type="color"/>
                             </b-form-group>
                         </b-col>
                     </b-row>
                     <b-row>
                         <b-col cols="6" md="6">
-                            <label for="range-2">Servo motor</label>
+                            <label style="font-weight: bold" for="range-2">Servo motor</label>
                             <b-form-input id="range-2" v-model="value" type="range" min="0" max="180" step="10"></b-form-input>
                             <div class="mt-2">Value: {{ value }}°</div>
+                        </b-col>
+                        <b-col cols="6" md="6">
+                            <b-form-group style="font-weight: bold" label="Display 16x2:" label-for="display16x2">
+                                <b-input id="display16x2"/>
+                            </b-form-group>
                         </b-col>
                     </b-row>
 
@@ -47,37 +52,18 @@
                     </div>
 
                     <b-row>
-                        <b-col cols="6" md="3">
-                            <b-form-group style="color: red; font-weight: bold" label="LED 1:" label-for="led_1">
-                                <b-form-checkbox id="led_1" size="lg" name="check-button" switch/>
-                            </b-form-group>
-                        </b-col>
-                        <b-col style="color: green; font-weight: bold" cols="6" md="3">
-                            <b-form-group label="LED 2:" label-for="led_2">
-                                <b-form-checkbox id="led_2" size="lg" name="check-button" switch/>
-                            </b-form-group>
-                        </b-col>
-                        <b-col style="color: blue; font-weight: bold" cols="6" md="3">
-                            <b-form-group label="LED 3:" label-for="led_3">
-                                <b-form-checkbox id="led_3" size="lg" name="check-button" switch/>
-                            </b-form-group>
-                        </b-col>
-                        <b-col cols="6" md="3" style="font-weight: bold">
-                            <b-form-group label="RGB:" label-for="led_rgb">
-                                <b-form-input id="led_rgb" v-model="led_rgb" type="color"/>
-                            </b-form-group>
-                        </b-col>
+                        
                     </b-row>
 
                 </b-col>
                 
             </b-row>
             
-            <div class="text-center" style="max-width: 700px; display: block; margin: auto;">
+            <div class="text-center mt-3" style="max-width: 700px; display: block; margin: auto;">
                 <b-embed
                     type="iframe"
                     aspect="16by9"
-                    src="https://www.youtube.com/embed/2BHZxmwvH2c"
+                    src="https://www.youtube.com/embed/0nCOQ0fs-So"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen
                 ></b-embed>
