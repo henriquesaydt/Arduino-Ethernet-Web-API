@@ -5,7 +5,8 @@
 </template>
 
 <script>
-import Home from './components/home'
+import Home from './components/home';
+import './custom.scss';
 
 export default {
   name: 'App',
@@ -14,3 +15,9 @@ export default {
   }
 }
 </script>
+
+<style>
+  body {
+    background-color:#c8d0da;
+  }
+</style>
