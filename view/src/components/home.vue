@@ -101,11 +101,15 @@
 </template>
 
 <script>
-import axios from "axios";
 
 export default {
     data() {
         return {
+            config: {
+                endereco: "",
+                porta: "",
+                token: ""
+            },
             value: 0,
             led_rgb: null
         }
@@ -135,13 +139,9 @@ export default {
 
     methods: {
         sendData() {
-            const formulario = new FormData(this.$refs.formEntradas);
-
-            axios({
-                url: "localhost/teste",
-                method: "post",
-                data: {
-                    token: 'teste',
+            var formulario = new FormData(this.$refs.formEntradas);
+            var data = {
+                    Token: '0147',
                     form: {
                         led_1: formulario.get("led_1"),
                         led_2: formulario.get("led_2"),
@@ -151,10 +151,7 @@ export default {
                         display16x2: formulario.get("display16x2"),
                     }
                 }
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
+            this.$emit("send", data);
         }
     }
 }

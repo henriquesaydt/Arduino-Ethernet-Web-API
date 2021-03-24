@@ -72,45 +72,22 @@ void loop() {
       }
       else {
         client.println("HTTP/1.1 200 OK");
-        client.println("Content-Type: text/html; charset=UTF-8");
+        client.println("Content-Type: application/json; charset=UTF-8");
         client.println("Connection: close");  // the connection will be closed after completion of the response
         client.println("personalizado: variavelTeste");
+        client.println("Access-Control-Allow-Origin: *");
+        client.println("Access-Control-Allow-Headers: *");
+        
         client.println();
         
         client.println(
-          "<!DOCTYPE html>"
-          "<html lang='pt-br'>"
-          "<head>"
-              "<meta charset='UTF-8'>"
-              "<title>API Arduino</title>"
-          "</head>"
-          "<body>"
-              "<H1>Bem-vindo</H1>"
-              "<p>Resposta: "
+          "{\"resposta\": {\"a\": [\"11\",\"22\",\"33\"],\"b\": [\"44\",\"55\",\"66\"]}}"
         );
-        deserializeJson(doc, body);
-        String Token = doc["Token"];
-        if (Token == "0147") {
-          String nome1 = doc["nome"]["primeiro"];
-          String nome2 = doc["nome"]["ultimo"];
-          String idade = doc["idade"];
-          String altura = doc["altura"];
-          client.print(nome1);
-          client.print(" ");
-          client.print(nome2);
-          client.print(" - ");
-          client.print(idade);
-          client.print(" - ");
-          client.print(altura);
-        }
-        else {
-          client.print("Token inválido!");
-        }
-        client.print(
-              "</p>"
-          "</body>"
-          "</html>"
-        );
+        Serial.println();
+        Serial.println("BODY: ");
+        Serial.print(body);
+        //deserializeJson(doc, body);
+        //String Token = doc["Token"];
         break;
       }
     }
