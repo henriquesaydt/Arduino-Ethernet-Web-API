@@ -12,44 +12,44 @@
                                 Entradas <font-awesome-icon icon="microchip"/>
                             </b-col>
                             <b-col cols="2" class="text-right">
-                                <a style="cursor: pointer">
-                                    <font-awesome-icon class="mr-3" icon="upload"/>
+                                <a @click="sendData" style="cursor: pointer">
+                                    <font-awesome-icon icon="upload"/>
                                 </a>
                             </b-col>    
                         </b-row>
                     </div>
 
-                    <b-form>
+                    <b-form ref="formEntradas">
                         <b-row>
                             <b-col cols="6" md="3">
                                 <b-form-group style="color: red; font-weight: bold" label="LED 1:" label-for="led_1">
-                                    <b-form-checkbox id="led_1" size="lg" switch/>
+                                    <b-form-checkbox id="led_1" name="led_1" size="lg" switch/>
                                 </b-form-group>
                             </b-col>
                             <b-col style="color: green; font-weight: bold" cols="6" md="3">
                                 <b-form-group label="LED 2:" label-for="led_2">
-                                    <b-form-checkbox id="led_2" size="lg" switch/>
+                                    <b-form-checkbox id="led_2" name="led_2" size="lg" switch/>
                                 </b-form-group>
                             </b-col>
                             <b-col style="color: blue; font-weight: bold" cols="6" md="3">
                                 <b-form-group label="LED 3:" label-for="led_3">
-                                    <b-form-checkbox id="led_3" size="lg" switch/>
+                                    <b-form-checkbox id="led_3" name="led_3" size="lg" switch/>
                                 </b-form-group>
                             </b-col>
                             <b-col cols="6" md="3" style="font-weight: bold">
                                 <b-form-group :style="'color:' + led_rgb" label="RGB:" label-for="led_rgb">
-                                    <b-form-input id="led_rgb" v-model="led_rgb" type="color"/>
+                                    <b-form-input id="led_rgb" name="led_rgb" v-model="led_rgb" type="color"/>
                                 </b-form-group>
                             </b-col>
                         </b-row>
                         <b-row>
                             <b-col cols="6" md="6">
-                                <label style="font-weight: bold" for="range-2">Servo motor: {{value}}°</label>
-                                <b-form-input id="range-2" v-model="value" type="range" min="0" max="180" step="10"></b-form-input>
+                                <label style="font-weight: bold" for="servo">Servo motor: {{value}}°</label>
+                                <b-form-input id="servo" name="servo" v-model="value" type="range" min="0" max="180" step="10"></b-form-input>
                             </b-col>
                             <b-col cols="6" md="6">
                                 <b-form-group style="font-weight: bold" label="Display 16x2:" label-for="display16x2">
-                                    <b-input id="display16x2"/>
+                                    <b-input id="display16x2" name="display16x2"/>
                                 </b-form-group>
                             </b-col>
                         </b-row>
@@ -87,7 +87,7 @@
                 
             </b-row>
             
-            <div class="text-center mt-3 mt-xl-4" style="max-width: 800px; display: block; margin: auto;">
+            <div class="text-center mt-3 mt-xl-4 w-75 w-xl-100" style="max-width: 800px; display: block; margin: auto;">
                 <b-embed
                     type="iframe"
                     aspect="16by9"
@@ -101,6 +101,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     data() {
         return {
@@ -128,6 +130,31 @@ export default {
             else {
                 return null;
             }
+        }
+    },
+
+    methods: {
+        sendData() {
+            const formulario = new FormData(this.$refs.formEntradas);
+
+            axios({
+                url: "localhost/teste",
+                method: "post",
+                data: {
+                    token: 'teste',
+                    form: {
+                        led_1: formulario.get("led_1"),
+                        led_2: formulario.get("led_2"),
+                        led_3: formulario.get("led_3"),
+                        led_rgb: formulario.get("led_rgb"),
+                        servo: formulario.get("servo"),
+                        display16x2: formulario.get("display16x2"),
+                    }
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
         }
     }
 }
