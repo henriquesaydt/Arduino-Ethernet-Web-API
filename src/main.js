@@ -9,12 +9,14 @@ import { faLightbulb } from '@fortawesome/free-solid-svg-icons'
 import { faThermometerHalf } from '@fortawesome/free-solid-svg-icons'
 import { faMicrochip } from '@fortawesome/free-solid-svg-icons'
 import { faUpload } from '@fortawesome/free-solid-svg-icons'
+import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faLightbulb)
 library.add(faThermometerHalf)
 library.add(faMicrochip)
 library.add(faUpload)
+library.add(faBars)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

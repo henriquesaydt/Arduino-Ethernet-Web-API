@@ -1,41 +1,22 @@
 <template>
-    <b-container class="mt-2 mt-md-3 mt-xl-5 mb-5 bg-danger">
-        <b-button v-b-toggle.sidebar-1>Toggle Sidebar</b-button>
-        <b-sidebar id="sidebar-1" title="Sidebar" shadow>
-            <template #footer="{ hide }">
-                <div class="d-flex bg-dark text-light align-items-center px-3 py-2">
-                    <strong class="mr-auto">Footer</strong>
-                    <b-button size="sm" @click="hide">Close</b-button>
-                </div>
-            </template>
-            <div class="px-3 py-2">
-                <p>
-                Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
-                in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-                </p>
-                <b-img src="https://picsum.photos/500/500/?image=54" fluid thumbnail></b-img>
-            </div>
-        </b-sidebar>
+    <b-container class="mt-2 mt-md-3 mt-xl-5 mb-5">
         <div class="pl-4 pr-4 pb-3 pt-3 p-xl-5 bg-light" style="border-radius: 5px">
             <b-row>
                 <b-col md="6">
 
                     <div class="text-light mb-2 mb-xl-4" style="background-color: #043f66; padding: 1px; border-radius: 5px; font-size: 25px;font-weight: bold">
                         <b-row>
-                            <b-col>
+                            <b-col cols="2">
                             </b-col>
-                            <b-col cols="6" class="text-center">
+                            <b-col cols="7" class="text-center">
                                 Entradas <font-awesome-icon icon="microchip"/>
                             </b-col>
-                            <b-col class="text-right">
+                            <b-col cols="2" class="text-right">
                                 <a style="cursor: pointer">
                                     <font-awesome-icon class="mr-3" icon="upload"/>
                                 </a>
-                                
                             </b-col>    
                         </b-row>
-                        
-                        
                     </div>
 
                     <b-form>
@@ -82,19 +63,19 @@
                         Sensores <font-awesome-icon icon="thermometer-half"/>
                     </div>
                     <b-row>
-                        <b-col cols="4" md="6" lg="4">
+                        <b-col cols="6" md="6" lg="4">
                             <b>LM35:</b>
                             <b-input-group class="mt-2" append="°C">
                                 <b-form-input disabled type="number" value="40"></b-form-input>
                             </b-input-group>
                         </b-col>
-                        <b-col cols="4" md="6" lg="4">
+                        <b-col cols="6" md="6" lg="4">
                             <b>LDR:</b>
                             <b-input-group class="mt-2" append="V">
                                 <b-form-input disabled type="number" value="2.5"></b-form-input>
                             </b-input-group>
                         </b-col>
-                        <b-col cols="4" md="6" lg="4">
+                        <b-col cols="6" md="6" lg="4" class="mt-2 mt-sm-0">
                             <b>HC-SR04:</b>
                             <b-input-group class="mt-2" append="cm">
                                 <b-form-input disabled type="number" value="10"></b-form-input>
@@ -106,7 +87,7 @@
                 
             </b-row>
             
-            <div class="text-center mt-2 mt-xl-4 pl-5 pr-5 p-xl-0" style="max-width: 800px; display: block; margin: auto;">
+            <div class="text-center mt-3 mt-xl-4" style="max-width: 800px; display: block; margin: auto;">
                 <b-embed
                     type="iframe"
                     aspect="16by9"
