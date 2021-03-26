@@ -4,6 +4,7 @@ import Vue from 'vue'
 import './plugins/bootstrap-vue'
 import App from './App.vue'
 import Vuex from 'vuex'
+import axios from 'axios'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faLightbulb } from '@fortawesome/free-solid-svg-icons'
@@ -33,18 +34,41 @@ const store = new Vuex.Store({
       ip: "",
       port: "",
       token: ""
+    },
+    status: {text: "Desconectado", color: "red", error: ""}
+  },
+  getters: {
+    status: state => {
+      return state.status;
     }
   },
   mutations: {
-    setConfig(state, {ip, port, token}) {
+    connect(state, {ip, port, token}) {
+      state.status = {text: "Conectando", color: "#d69d00", error: ""};
       state.config = {
         ip: ip,
         port: port,
         token: token
       }
-      
+      axios({
+        url: `http://${state.config.ip}:${state.config.port}`,
+        method: 'post',
+        data: {token: token},
+        headers: {'Content-Type': 'text/plain'}
+      })
+      .catch( error => {
+        console.log(error);
+      })
+      .then( response => {
+        if (response.data.status == "success") {
+          state.status = {text: "Conectado", color: "green"};
+        }
+        else {
+          state.status = {text: "Desconectado", color: "red", error: response.data.message};
+        }
+      })
     },
-    desconect(state) {
+    desconnect(state) {
       state.config = {
         ip: "",
         port: "",

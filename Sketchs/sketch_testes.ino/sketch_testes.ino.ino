@@ -77,17 +77,22 @@ void loop() {
         client.println("personalizado: variavelTeste");
         client.println("Access-Control-Allow-Origin: *");
         client.println("Access-Control-Allow-Headers: *");
-        
+        delay(3000);
         client.println();
         
-        client.println(
-          "{\"resposta\": {\"a\": [\"11\",\"22\",\"33\"],\"b\": [\"44\",\"55\",\"66\"]}}"
-        );
         Serial.println();
-        Serial.println("BODY: ");
-        Serial.print(body);
-        //deserializeJson(doc, body);
-        //String Token = doc["Token"];
+        deserializeJson(doc, body);
+        String token = doc["token"];
+        if (token == "0147") {
+          client.println(
+            "{\"status\": \"success\"}"
+          );
+        }
+        else {
+          client.println(
+            "{\"status\":\"error\", \"message\":\"token inválido\"}"
+          );
+        }
         break;
       }
     }
