@@ -6,7 +6,7 @@
       </div>
     </a>
     <Sidebar/>
-    <Home @send="sendData" class="text-center pl-0 pr-0 pl-xl-3 pr-xl-3"/>
+    <Home class="text-center pl-0 pr-0 pl-xl-3 pr-xl-3"/>
   </div>
 </template>
 
@@ -14,30 +14,12 @@
 import Home from './components/home';
 import Sidebar from './components/Sidebar'
 import './custom.scss';
-import axios from "axios";
 
 export default {
   name: 'App',
   components: {
     Home,
     Sidebar
-  },
-  methods: {
-    sendData() {
-      console.log("aki");
-      axios({
-        url: "http://192.168.0.23:80",
-        method: "post",
-        data: {Token: "0147"},
-        headers: {'Content-Type': 'text/plain'}
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
-      .then((response) => {
-        console.log(response.data);
-      })
-    }
   }
 }
 </script>

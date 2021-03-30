@@ -77,16 +77,24 @@ void loop() {
         client.println("personalizado: variavelTeste");
         client.println("Access-Control-Allow-Origin: *");
         client.println("Access-Control-Allow-Headers: *");
-        delay(3000);
         client.println();
         
         Serial.println();
         deserializeJson(doc, body);
         String token = doc["token"];
+        bool receiveData = doc["receiveData"];
+        
         if (token == "0147") {
-          client.println(
-            "{\"status\": \"success\"}"
-          );
+          if (receiveData) {
+            client.println(
+              "{\"status\":\"success\", \"dados\":\"75\"}"
+            );
+          }
+          else {
+            client.println(
+              "{\"status\": \"success\"}"
+            );
+          }
         }
         else {
           client.println(
