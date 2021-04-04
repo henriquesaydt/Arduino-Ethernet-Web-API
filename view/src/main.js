@@ -145,9 +145,9 @@ const store = new Vuex.Store({
                 console.log(response.data);
                 state.gettingData = false;
                 state.sensorsData = {
-                    lm35: response.data.dados,
-                    ldr: "",
-                    hcsr04: ""
+                    lm35: response.data.dados.lm35,
+                    ldr: response.data.dados.ldr,
+                    hcsr04: response.data.dados.hcsr04
                 }
             })
         }

@@ -64,7 +64,7 @@
                             <b-col cols="3">
                             </b-col>
                             <b-col cols="6" class="text-center">
-                                Entradas <font-awesome-icon icon="thermometer-half"/>
+                                Sensores <font-awesome-icon icon="thermometer-half"/>
                             </b-col>
                             <b-col cols="3" class="text-center">
                                 <a @click="getData" style="cursor: pointer">
@@ -133,6 +133,7 @@ export default {
         IDStatus(val) {
             if (val == 2) {
                 this.autoLoad = true;
+                this.$store.commit("getData", {reference: this});
                 setInterval(() => {
                     if (!this.autoLoad) {
                         return;

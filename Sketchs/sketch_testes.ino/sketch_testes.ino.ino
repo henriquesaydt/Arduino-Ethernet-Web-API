@@ -1,6 +1,8 @@
+#include <Servo.h>
 #include <ArduinoJson.h>
 #include <SPI.h>
 #include <Ethernet.h>
+#include <Ultrasonic.h>
 
 byte mac[] = {
   0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF 
@@ -11,14 +13,21 @@ IPAddress subnet(255, 255, 255, 0);
 
 EthernetServer server(80);
 
+//SENSORES
+#define echoPin 23
+#define trigPin 22
+Ultrasonic ultrasonic(trigPin,echoPin);
+
+//ENTRADAS
+#define servoPin 24
+Servo servo;
+
 void setup() {
-  // You can use Ethernet.init(pin) to configure the CS pin
-  //Ethernet.init(10);  // Most Arduino shields
-  //Ethernet.init(5);   // MKR ETH shield
-  //Ethernet.init(0);   // Teensy 2.0
-  //Ethernet.init(20);  // Teensy++ 2.0
-  //Ethernet.init(15);  // ESP8266 with Adafruit Featherwing Ethernet
-  //Ethernet.init(33);  // ESP32 with Adafruit Featherwing Ethernet
+  //INIT
+  pinMode(echoPin, INPUT);
+  pinMode(trigPin, OUTPUT );
+  servo.attach(servoPin);
+  servo.write(0);
 
   // Open serial communications and wait for port to open:
   Serial.begin(9600);
@@ -86,14 +95,22 @@ void loop() {
         
         if (token == "0147") {
           if (receiveData) {
-            client.println(
-              "{\"status\":\"success\", \"dados\":\"75\"}"
+            String dados;
+            DynamicJsonDocument docSend(1024);
+            docSend["hcsr04"] = hcsr04();
+            serializeJson(docSend, dados);
+            
+            client.print(
+              "{\"status\":\"success\", \"dados\":"
             );
+            client.print(dados);
+            client.print('}');
           }
           else {
             client.println(
               "{\"status\": \"success\"}"
             );
+            servo.write(doc["data"]["servo"]);
           }
         }
         else {
@@ -111,4 +128,17 @@ void loop() {
     Serial.println();
     Serial.println("client disconnected");
   }
+}
+
+int hcsr04() {
+  digitalWrite(trigPin, LOW); //SETA O PINO 6 COM UM PULSO BAIXO "LOW"
+  delayMicroseconds(2); //INTERVALO DE 2 MICROSSEGUNDOS
+  digitalWrite(trigPin, HIGH); //SETA O PINO 6 COM PULSO ALTO "HIGH"
+  delayMicroseconds(10); //INTERVALO DE 10 MICROSSEGUNDOS
+  digitalWrite(trigPin, LOW); //SETA O PINO 6 COM PULSO BAIXO "LOW" NOVAMENTE
+  //FUNÇÃO RANGING, FAZ A CONVERSÃO DO TEMPO DE
+  //RESPOSTA DO ECHO EM CENTIMETROS, E ARMAZENA
+  //NA VARIAVEL "distancia"
+  int distancia = (ultrasonic.Ranging(CM)); //VARIÁVEL GLOBAL RECEBE O VALOR DA DISTÂNCIA MEDIDA
+  return distancia;
 }
