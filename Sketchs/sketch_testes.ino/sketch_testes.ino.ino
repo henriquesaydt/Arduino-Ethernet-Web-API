@@ -10,13 +10,14 @@ byte mac[] = {
 IPAddress ip(192,168,0,23);
 IPAddress gateway(192,168,0,1);
 IPAddress subnet(255, 255, 255, 0);
-
 EthernetServer server(80);
 
 //SENSORES
 #define echoPin 23
 #define trigPin 22
 Ultrasonic ultrasonic(trigPin,echoPin);
+#define lm35Pin A0
+#define ky038Pin A1
 
 //ENTRADAS
 #define servoPin 24
@@ -25,7 +26,9 @@ Servo servo;
 void setup() {
   //INIT
   pinMode(echoPin, INPUT);
-  pinMode(trigPin, OUTPUT );
+  pinMode(trigPin, OUTPUT);
+  pinMode(lm35Pin, INPUT);
+  pinMode(ky038, INPUT);
   servo.attach(servoPin);
   servo.write(0);
 
@@ -95,9 +98,13 @@ void loop() {
         
         if (token == "0147") {
           if (receiveData) {
+
+            //JSON com dados dos sensores
             String dados;
             DynamicJsonDocument docSend(1024);
             docSend["hcsr04"] = hcsr04();
+            docSend["lm35"] = lm35();
+            docSend["ky038"] = ky038();
             serializeJson(docSend, dados);
             
             client.print(
@@ -130,15 +137,27 @@ void loop() {
   }
 }
 
+//============================== SENSORES =================================
+
 int hcsr04() {
-  digitalWrite(trigPin, LOW); //SETA O PINO 6 COM UM PULSO BAIXO "LOW"
-  delayMicroseconds(2); //INTERVALO DE 2 MICROSSEGUNDOS
-  digitalWrite(trigPin, HIGH); //SETA O PINO 6 COM PULSO ALTO "HIGH"
-  delayMicroseconds(10); //INTERVALO DE 10 MICROSSEGUNDOS
-  digitalWrite(trigPin, LOW); //SETA O PINO 6 COM PULSO BAIXO "LOW" NOVAMENTE
-  //FUNÇÃO RANGING, FAZ A CONVERSÃO DO TEMPO DE
-  //RESPOSTA DO ECHO EM CENTIMETROS, E ARMAZENA
-  //NA VARIAVEL "distancia"
-  int distancia = (ultrasonic.Ranging(CM)); //VARIÁVEL GLOBAL RECEBE O VALOR DA DISTÂNCIA MEDIDA
-  return distancia;
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  return (ultrasonic.Ranging(CM));
+}
+
+float lm35() {
+  float lm35AnalogValue = float(analogRead(lm35Pin));
+  float lm35Tensao = (lm35AnalogValue * 5) / 1023;
+  return lm35Tensao / 0.010;
+}
+
+int ky038() {
+  int total = 0;
+  for (int i = 0; i<100; i++) {
+    total += analogRead(ky038Pin);
+  }
+  return total / 100;
 }
