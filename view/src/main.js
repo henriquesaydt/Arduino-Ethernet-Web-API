@@ -146,7 +146,7 @@ const store = new Vuex.Store({
                 state.gettingData = false;
                 state.sensorsData = {
                     lm35: response.data.dados.lm35,
-                    ldr: response.data.dados.ldr,
+                    ky038: response.data.dados.ky038.toFixed(2),
                     hcsr04: response.data.dados.hcsr04
                 }
             })

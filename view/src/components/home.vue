@@ -48,8 +48,8 @@
                                 <b-form-input id="servo" name="servo" v-model="value" type="range" min="0" max="180" step="10"></b-form-input>
                             </b-col>
                             <b-col cols="6" md="6">
-                                <b-form-group style="font-weight: bold" label="Display 16x2:" label-for="display16x2">
-                                    <b-input id="display16x2" name="display16x2"/>
+                                <b-form-group style="font-weight: bold" label="Display Nokia:" label-for="display">
+                                    <b-input id="display" name="display"/>
                                 </b-form-group>
                             </b-col>
                         </b-row>
@@ -81,9 +81,9 @@
                             </b-input-group>
                         </b-col>
                         <b-col cols="6" md="6" lg="4">
-                            <b>LDR:</b>
+                            <b>KY-038:</b>
                             <b-input-group class="mt-2" append="V">
-                                <b-form-input disabled type="number" :value="$store.getters.sensorsData.ldr"></b-form-input>
+                                <b-form-input disabled type="number" :value="$store.getters.sensorsData.ky038"></b-form-input>
                             </b-input-group>
                         </b-col>
                         <b-col cols="6" md="6" lg="4" class="mt-2 mt-sm-0">
@@ -99,15 +99,13 @@
             </b-row>
             
             <div class="text-center mt-3 mt-xl-4 w-75 w-xl-100" style="max-width: 800px; display: block; margin: auto;">
-                <!--
                 <b-embed
                     type="iframe"
                     aspect="16by9"
-                    src="https://www.youtube.com/embed/0nCOQ0fs-So"
+                    src="https://www.youtube.com/embed/IRB7E0aLxWE"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen
                 ></b-embed>
-                -->
             </div>
         </div>
     </b-container>
@@ -189,9 +187,9 @@ export default {
                     led_1: formulario.get("led_1"),
                     led_2: formulario.get("led_2"),
                     led_3: formulario.get("led_3"),
-                    led_rgb: formulario.get("led_rgb"),
+                    led_rgb: this.hexToRgb,
                     servo: formulario.get("servo"),
-                    display16x2: formulario.get("display16x2")
+                    display: formulario.get("display")
                 }
             }
             this.$store.commit("sendEntries", {data: formJson, reference: this});
